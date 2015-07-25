@@ -1,0 +1,29 @@
+* {
+    font-family: arial;
+}
+
+*:focus {
+  outline: 0;
+  box-shadow: 1px 1px 1px #888888;
+}
+ 
+.label {
+    font-size: 23px;
+    color: gray;
+    padding: 4px;
+}
+ 
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: gray;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: gray;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: gray;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color: gray;
+}
