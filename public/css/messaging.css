@@ -55,7 +55,6 @@
     padding: 4px;
     width: 80px;
     height: 38px;
-    box-shadow: 1px 1px 1px #888888;
 }
 
 .text-message {
@@ -79,6 +78,7 @@
 .send-message:hover {
     cursor: pointer;
     background-color: rgb(255, 163, 0);
+    box-shadow: 1px 1px 1px #888888;
 }
 
 .text {
