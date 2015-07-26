@@ -9,8 +9,8 @@ function createUser() {
 		url: '/createUser?username=' + $('#user-name').val(),
 		type: "POST"
 	}).done(function(advance) {
-		if (advance.advance) 
-			window.location = '/messaging.html';
+		if (advance.advance != 'false')
+			window.location = advance.advance;
 		else
 			alert('You must choose a different username');
 	});
