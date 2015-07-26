@@ -12,9 +12,15 @@ $(document).ready(function() {
 
 	getMessages();
 	getUsers();
-	setInterval(getMessages, 5000);
+	scrollToBottom();
+	setInterval(scrollToBottom, 200);
+	setInterval(getMessages, 2000);
 	setInterval(getUsers, 5000);
 });
+
+function scrollToBottom() {
+	$(".message-board").animate({ scrollTop: $('.message-board').height()}, 1000);
+}
 
 function sendMessage() {
 	var message = $('.user-text').val();
@@ -24,8 +30,9 @@ function sendMessage() {
 			type: "POST"
 		}).done(function(message) {
 			console.log(message);
-			var text = "<div class='name'>" + message.username
-				+ "</div><div class='text'>" + message.text + "</div>";
+			var text = "<div class='text-container'><div class='name'>" + message.username + ":</div><div class='text'>" + message.text + "</div></div>";
+			// var text = "<div class='text-container'><div class='text'>" + message.text + "</div></div><div class='name'>" + message.username
+			// 	+ "</div>";
 			$('.message-board').append(text);
 			$('.user-text').val('');
 		});
@@ -38,8 +45,9 @@ function getMessages() {
 		type: "GET"
 	}).done(function(messages) {
 		messages.forEach(function(message) {
-			var text = "<div class='name-grabbed'>" + message.username
-				+ "</div><div class='text-grabbed'>" + message.text + "</div>";
+			var text = "<div class='text-container'><div class='name-grabbed'>" + message.username + ":</div><div class='text'>" + message.text + "</div></div>";
+			// var text = "<div class='text'>" + message.text + "</div></div><div class='text-container'><div class='name-grabbed'>" + message.username
+			// 	+ "</div>";
 			$('.message-board').append(text);
 		});
 	});
