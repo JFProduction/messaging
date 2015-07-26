@@ -6,7 +6,7 @@ var colors = [
     '#04A910', // green
     '#000000', // yellow
     '#FF00EA', // pink
-    '#FFFFFF'  // white
+    '#A77878'  // idk
 ]
 
 var colorNum = 0;
