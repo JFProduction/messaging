@@ -62,12 +62,14 @@
 }
 
 .name {
-    color: #FF9700;
+    /*color: #FF9700;*/
+    color: blue;
     font-size: 12px;
 }
 
 .name-grabbed {
     float: right;
+    color: red
     font-size: 12px;
 }
 

@@ -1,26 +1,50 @@
 var express = require('express'),
     app = express(),
     request = require('request'),
-    path = require('path');
+    path = require('path'),
+    helper = require('./helper');
 
 var users = [];
-var messages = [];
+// var messages = [];
 var messageCount = 0;
 var userCount = 0;
 
+// // user object
+function user() {
+    this.username = "";
+    this.uid = 0;
+    this.messages = [];
+    this.messageCount = 0;
+    this.printuser = function() {
+        return "[ username: " + this.username + ", uid: " + this.uid + " ]";
+    };
+}
+
+// message object
+function message() {
+    this.text = "";
+    this.username;
+    this.getmessage = function() {
+        return this;
+    };
+}
+
 app.use(express.static(path.join(__dirname,'public')));
 
-// sends the message
+// sends the message, also gives others users
+// the message
 app.post('/sendMessage', function(req, res) {
     var input = req.query.message;
-    var u = getUser(getIpNum(req.ip));
+    var u = helper.getUser(helper.getIpNum(req.ip), users);
     console.log("u after getting: " + u.printuser());
     if (u.username != "") {
         var m = new message();
         m.text = input;
         m.username = u.username;
-        console.log(m.getmessage());
-        messages[messageCount++] = m.getmessage();
+        helper.passMessageToOtherUsers(m, users);
+
+        // so the message appears on
+        // the user's screen
         res.json( m.getmessage() );
     }
 });
@@ -30,9 +54,9 @@ app.post('/sendMessage', function(req, res) {
 app.post('/createUser', function(req, res) {
     var name = req.query.username;
     var u = new user();
-    if (!checkIfUserExists(name)) {
+    if (!helper.checkIfUserExists(name, users)) {
         u.username = name;
-        u.ip = getIpNum(req.ip);
+        u.uid = helper.getIpNum(req.ip);
         users[userCount++] = u;
         res.json( { "advance": true } );
     }
@@ -46,59 +70,13 @@ app.get('/getUsers', function(req, res) {
 });
 
 
-// gets the messages and posts them for everyone
+// gets the user's messages and posts them
 app.get('/getMessages', function(req, res) {
-    if (messages.length >= 1) {
-        res.json(messages);
-        messages = [];
-        messageCount = 0;
-    }
+    var u = helper.getUser(helper.getIpNum(req.ip), users);
+    res.json(u.messages);
+    u.messages = [];
+    u.messageCount = 0;
 });
-
-// checks to see if the username already exists
-function checkIfUserExists(name) {
-    var exists = false;
-    users.forEach(function(user){
-        if (user.username === name)
-            exists = true;
-    });
-    return exists;
-}
-
-function getUser(ip) {
-    console.log("in getUser");
-    var u;
-    users.forEach(function(user) {
-        if (user.ip === ip)
-            u = user;
-    });
-    console.log(u.printuser());
-    return u;
-}
-
-function getIpNum(ip) {
-    ip = ip.split(":").join('');
-    var tmp = ip.replace(/[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]/, '')
-        .split(".").join('');
-    return tmp;
-}
-
-function user() {
-    this.username = "";
-    this.ip = 0;
-    this.printuser = function() {
-        return "username: " + this.username + ", ip: " + this.ip
-            + ", usernum: " + this.userNum;
-    };
-}
-
-function message() {
-    this.text = "";
-    this.username;
-    this.getmessage = function() {
-        return this;
-    };
-}
 
 app.listen(process.env.PORT || 8080);
 console.log("Application has started at: localhost:8080");

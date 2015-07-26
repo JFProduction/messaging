@@ -1,5 +1,4 @@
 // var spacePatt = /\s/g+;
-
 $(document).ready(function() {
 	$('.user-text').on('keyup', function(e) {
 	    if (e.which == 13) {

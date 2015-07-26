@@ -12,8 +12,8 @@ $(document).ready(function() {
 
 	getMessages();
 	getUsers();
-	// setInterval(getMessages, 10);
-	// setInterval(getUsers, 5000);
+	setInterval(getMessages, 5000);
+	setInterval(getUsers, 5000);
 });
 
 function sendMessage() {
