@@ -30,9 +30,8 @@ function sendMessage() {
 			type: "POST"
 		}).done(function(message) {
 			console.log(message);
-			var text = "<div class='text-container'><div class='name'>" + message.username + ":</div><div class='text'>" + message.text + "</div></div>";
-			// var text = "<div class='text-container'><div class='text'>" + message.text + "</div></div><div class='name'>" + message.username
-			// 	+ "</div>";
+			var text = "<div class='text-container'><div class='name'>"
+				+ message.username + ":</div><div class='text'>" + message.text + "</div></div>";
 			$('.message-board').append(text);
 			$('.user-text').val('');
 		});
@@ -45,9 +44,8 @@ function getMessages() {
 		type: "GET"
 	}).done(function(messages) {
 		messages.forEach(function(message) {
-			var text = "<div class='text-container'><div class='name-grabbed'>" + message.username + ":</div><div class='text'>" + message.text + "</div></div>";
-			// var text = "<div class='text'>" + message.text + "</div></div><div class='text-container'><div class='name-grabbed'>" + message.username
-			// 	+ "</div>";
+			var text = "<div class='text-container'><div class='name-grabbed'>"
+				+ message.username + ":</div><div class='text'>" + message.text + "</div></div>";
 			$('.message-board').append(text);
 		});
 	});
