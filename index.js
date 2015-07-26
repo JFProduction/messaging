@@ -5,17 +5,18 @@ var express = require('express'),
 
 // global variabels
 var users = [];
-var messageCount = 0;
 var userCount = 0;
 
-// // user object
+// user object
 function user() {
     this.username = "";
     this.uid = 0;
+    this.usercolor = "";
     this.messages = [];
     this.messageCount = 0;
     this.printuser = function() {
-        return "[ username: " + this.username + ", uid: " + this.uid + " ]";
+        return "[ username: " + this.username + ", uid: " + this.uid
+                + ", usercolor: " + this.usercolor +  " ]";
     };
 }
 
@@ -23,6 +24,7 @@ function user() {
 function message() {
     this.text = "";
     this.username;
+    this.usercolor;
     this.getmessage = function() {
         return this;
     };
@@ -40,6 +42,7 @@ app.post('/sendMessage', function(req, res) {
         var m = new message();
         m.text = input;
         m.username = u.username;
+        m.usercolor = u.usercolor;
         helper.passMessageToOtherUsers(m, users);
 
         // so the message appears on
@@ -56,6 +59,8 @@ app.post('/createUser', function(req, res) {
     if (!helper.checkIfUserExists(name, users)) {
         u.username = name;
         u.uid = helper.getIpNum(req.ip);
+        u.usercolor = helper.setUserColor(users);
+        console.log(u.printuser());
         users[userCount++] = u;
         res.json( { "advance": '/messaging.html' } );
     }

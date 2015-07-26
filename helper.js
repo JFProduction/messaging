@@ -1,4 +1,24 @@
+// palette of colors for usernames
+var colors = [
+    '#FF0000',  // red
+    '#0900FF', // blue
+    '#FF9700', // orange
+    '#04A910', // green
+    '#000000', // yellow
+    '#FF00EA', // pink
+    '#FFFFFF'  // white
+]
+
+var colorNum = 0;
+
 module.exports = {
+    setUserColor: function(users) {
+        if (colorNum <= 5)
+            return colors[colorNum++];
+        else
+            colorNum = 0;
+    },
+
     //checks to see if the username already exists
     checkIfUserExists: function (name, users) {
         var exists = false;

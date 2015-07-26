@@ -59,9 +59,8 @@
 }
 
 .name {
-    color: red;
+    /*color: red;*/
     padding: 2px;
-    /*font-size: 1px;*/
     float: left;
 }
 
@@ -85,7 +84,7 @@
 
 .name-grabbed {
     padding: 2px;
-    color: blue;
+    /*color: blue;*/
     float: left;
     /*font-size: 11px;*/
 }
