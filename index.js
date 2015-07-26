@@ -1,11 +1,10 @@
 var express = require('express'),
     app = express(),
-    request = require('request'),
     path = require('path'),
     helper = require('./helper');
 
+// global variabels
 var users = [];
-// var messages = [];
 var messageCount = 0;
 var userCount = 0;
 
@@ -58,10 +57,10 @@ app.post('/createUser', function(req, res) {
         u.username = name;
         u.uid = helper.getIpNum(req.ip);
         users[userCount++] = u;
-        res.json( { "advance": true } );
+        res.json( { "advance": '/messaging.html' } );
     }
     else
-        res.json( { "advance": false } );
+        res.json( { "advance": 'false' } );
 });
 
 // gets all the users

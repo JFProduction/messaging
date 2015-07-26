@@ -1,4 +1,3 @@
-// checks to see if the username already exists
 module.exports = {
     //checks to see if the username already exists
     checkIfUserExists: function (name, users) {
