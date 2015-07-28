@@ -24,7 +24,7 @@ function sendMessage() {
 	console.log(messageBoard);
 	if (message != "") {
 		$.ajax({
-			url: '/sendMessage?message=' + message + "|" + messageBoard,
+			url: '/sendMessage?message=' + message,
 			type: "POST"
 		}).done(function(message) {
 			console.log(message);
@@ -42,9 +42,10 @@ function getMessages() {
 		type: "GET"
 	}).done(function(messages) {
 		messages.forEach(function(message) {
+			console.log("inside getMessages MB:" + message.messageboard);
 			var text = "<div class='text-container'><div class='name-grabbed' style='color: " + message.usercolor + "'>"
 				+ message.username + ":</div><div class='text'>" + message.text + "</div></div>";
-			$('#' + message.messageboard).append(text);
+			$('#' + message.username).append(text);
 		});
 	});
 }
@@ -81,12 +82,14 @@ function createPrivateChat(name) {
 function getPrivateChats() {
 	$.ajax({
 		url: '/getPrivateChats',
-		type: "POST"
+		type: "GET"
 	}).done(function(messageboards) {
-		messageboards.forEach(function(name) {
-			$('.tabs').append("<div id='" + name + "_pc'><a href='#" + name + "' onclick='changeChat(\"" + name + "-chat\")'>PC " + name + "</a>"
-				+ "<div class='message-board' id='" + name + "-chat'></div></div>");
-		});
+		if (messageboards.length > 0) {
+			messageboards.forEach(function(name) {
+				$('.tabs').append("<div id='" + name + "_pc'><a href='#" + name + "' onclick='changeChat(\"" + name + "-chat\")'>PC " + name + "</a>"
+					+ "<div class='message-board' id='" + name + "-chat'></div></div>");
+			});
+		}
 	});
 }
 

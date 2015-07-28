@@ -69,13 +69,16 @@ module.exports = {
     // messageboard for the user so only one
     // messageboard per username combo
     addMessageBoard: function(mbs, mb) {
-        var add = false;
-        mbs.forEach(function(m) {
-            if (m != mb)
-                add = true;
-            else
-                add = false;
-        });
+        console.log(mb);
+        var add = true;
+        if (mbs.length > 0) {
+            mbs.forEach(function(m) {
+                if (m != mb)
+                    add = true;
+                else
+                    add = false;
+            });
+        }
         return add;
     }
 };

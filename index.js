@@ -48,13 +48,21 @@ app.post('/sendMessage', function(req, res) {
         m.text = text;
         m.username = u.username;
         m.usercolor = u.usercolor;
-        m.messageboard = messageboard;
+        m.messageboard = u.username;
         helper.passMessageToOtherUsers(m, users);
 
         // so the message appears on
         // the user's screen
         res.json( m.getmessage() );
     }
+});
+
+// gets the user's messages and posts them
+app.get('/getMessages', function(req, res) {
+    var u = helper.getUser(helper.getIpNum(req.ip), users);
+    res.json(u.messages);
+    u.messages = [];
+    u.messageCount = 0;
 });
 
 // creates the user and passes the frontend
@@ -74,32 +82,27 @@ app.post('/createUser', function(req, res) {
 });
 
 app.post('/createPrivateChat', function(req, res) {
-    var messageboard = req.query.username;
-    var u = helper.getUserByName(messageboard, users);
-    var addMB = helper.addMessageBoard(u.privateMessageBoards, messageboard);
-
-    if (addMB)
-        u.privateMessageBoards[u.privMBCount++] = messageboard;
+    var name = req.query.username;
+    var u = helper.getUserByName(name, users);
+    var u2 = helper.getUser(helper.getIpNum(req.ip), users);
+    var addMB = helper.addMessageBoard(u.privateMessageBoards, name);
+    console.log(addMB);
+    if (addMB) {
+        u.privateMessageBoards[u.privMBCount++] = u2.username;
+        u2.privateMessageBoards[u2.privMBCount++] = name;
+    }
 });
 
-app.post('/getPrivateChats', function(req, res) {
+app.get('/getPrivateChats', function(req, res) {
     var u = helper.getUser(helper.getIpNum(req.ip), users);
-    console.log(u.privateMessageBoards);
-    return u.privateMessageBoards;
+    res.json(u.privateMessageBoards);
+    u.privateMessageBoards = [];
+    u.privMBCount = 0;
 });
 
 // gets all the users
 app.get('/getUsers', function(req, res) {
     res.json(users);
-});
-
-
-// gets the user's messages and posts them
-app.get('/getMessages', function(req, res) {
-    var u = helper.getUser(helper.getIpNum(req.ip), users);
-    res.json(u.messages);
-    u.messages = [];
-    u.messageCount = 0;
 });
 
 app.listen(process.env.PORT || 8080);
