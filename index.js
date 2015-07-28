@@ -14,9 +14,11 @@ function user() {
     this.usercolor = "";
     this.messages = [];
     this.messageCount = 0;
+    this.privateMessageBoards = [];
+    this.privMBCount = 0;
     this.printuser = function() {
         return "[ username: " + this.username + ", uid: " + this.uid
-                + ", usercolor: " + this.usercolor +  " ]";
+                + ", usercolor: " + this.usercolor +  " messageboards: " + this.privateMessageBoards + " ]";
     };
 }
 
@@ -25,6 +27,7 @@ function message() {
     this.text = "";
     this.username;
     this.usercolor;
+    this.messageboard;
     this.getmessage = function() {
         return this;
     };
@@ -35,14 +38,17 @@ app.use(express.static(path.join(__dirname,'public')));
 // sends the message, also gives others users
 // the message
 app.post('/sendMessage', function(req, res) {
-    var input = req.query.message;
+    var input = req.query.message.split("|");
+    var messageboard = input[1];
+    var text = input[0];
     var u = helper.getUser(helper.getIpNum(req.ip), users);
     console.log("u after getting: " + u.printuser());
     if (u.username != "") {
         var m = new message();
-        m.text = input;
+        m.text = text;
         m.username = u.username;
         m.usercolor = u.usercolor;
+        m.messageboard = messageboard;
         helper.passMessageToOtherUsers(m, users);
 
         // so the message appears on
@@ -60,12 +66,26 @@ app.post('/createUser', function(req, res) {
         u.username = name;
         u.uid = helper.getIpNum(req.ip);
         u.usercolor = helper.setUserColor(users);
-        console.log(u.printuser());
         users[userCount++] = u;
         res.json( { "advance": '/messaging.html' } );
     }
     else
         res.json( { "advance": 'false' } );
+});
+
+app.post('/createPrivateChat', function(req, res) {
+    var messageboard = req.query.username;
+    var u = helper.getUserByName(messageboard, users);
+    var addMB = helper.addMessageBoard(u.privateMessageBoards, messageboard);
+
+    if (addMB)
+        u.privateMessageBoards[u.privMBCount++] = messageboard;
+});
+
+app.post('/getPrivateChats', function(req, res) {
+    var u = helper.getUser(helper.getIpNum(req.ip), users);
+    console.log(u.privateMessageBoards);
+    return u.privateMessageBoards;
 });
 
 // gets all the users
