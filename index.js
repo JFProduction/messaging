@@ -8,7 +8,7 @@ var users = [];
 var userCount = 0;
 
 // user object
-function user() {
+function User() {
     this.username = "";
     this.uid = 0;
     this.usercolor = "";
@@ -23,7 +23,7 @@ function user() {
 }
 
 // message object
-function message() {
+function Message() {
     this.text = "";
     this.username;
     this.usercolor;
@@ -38,17 +38,18 @@ app.use(express.static(path.join(__dirname,'public')));
 // sends the message, also gives others users
 // the message
 app.post('/sendMessage', function(req, res) {
-    var input = req.query.message.split("|");
-    var messageboard = input[1];
-    var text = input[0];
+    var text = req.query.message;
+    var messageboard = req.query.messageboard;
     var u = helper.getUser(helper.getIpNum(req.ip), users);
-    console.log("u after getting: " + u.printuser());
+    
+    // TODO: need to figure out the private message issue....
+    
     if (u.username != "") {
-        var m = new message();
+        var m = new Message();
         m.text = text;
         m.username = u.username;
         m.usercolor = u.usercolor;
-        m.messageboard = u.username;
+        m.messageboard = messageboard;
         helper.passMessageToOtherUsers(m, users);
 
         // so the message appears on
@@ -69,7 +70,7 @@ app.get('/getMessages', function(req, res) {
 // if the username is unique
 app.post('/createUser', function(req, res) {
     var name = req.query.username;
-    var u = new user();
+    var u = new User();
     if (!helper.checkIfUserExists(name, users)) {
         u.username = name;
         u.uid = helper.getIpNum(req.ip);
@@ -93,6 +94,11 @@ app.post('/createPrivateChat', function(req, res) {
     }
 });
 
+app.post('/getUsername', function(req, res) {
+    var u = helper.getUser(helper.getIpNum(req.ip), users);
+    res.json({ "name": u.username });
+});
+
 app.get('/getPrivateChats', function(req, res) {
     var u = helper.getUser(helper.getIpNum(req.ip), users);
     res.json(u.privateMessageBoards);
@@ -105,5 +111,5 @@ app.get('/getUsers', function(req, res) {
     res.json(users);
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(8080);
 console.log("Application has started at: localhost:8080");
