@@ -42,7 +42,6 @@ function sendMessage() {
 			url: '/sendMessage?message=' + message + "&messageboard=" + messageBoard,
 			type: "POST"
 		}).done(function(message) {
-			console.log(message);
 			var text = "<div class='text-container'><div class='name' style='color: " + message.usercolor + "'>"
 				+ message.username + ":</div><div class='text'>" + message.text + "</div></div>";
 			$('#' + messageBoard).append(text);
@@ -66,8 +65,6 @@ function getMessages() {
 			else
 				$('#main-chat').append(text);
 			
-			console.log('messageBoard: ' + messageBoard + ' message.messageboard: ' + message.messageboard);
-			
 			if (messageBoard != message.messageboard && message.messageboard != 'main-chat') {
 				var pcName = message.username + '-a';
 				console.log('pcName: ' + pcName);
@@ -77,7 +74,7 @@ function getMessages() {
 			}
 			else {
 				var pcName = message.messageboard.split('-')[0] + '-a';
-				console.log('pcName: ' + pcName);
+				
 				$('#' + pcName ).addClass('flash');
 				pendingChat = pcName;
 				flashInterval[pcName] = setInterval(toggleFlash, 1000);
@@ -140,10 +137,7 @@ function getPrivateChats() {
 }
 
 function changeChat(chat) {
-	console.log('inside changeChat pendingChat ' + pendingChat);
-	console.log('inside changeChat chat ' + chat);
 	if (pendingChat && (chat.split('-')[0] + '-a' == pendingChat)) {
-		console.log('about to clear the flash interval for ' + pendingChat);
 		$('#' + pendingChat).removeClass('flash');
 		clearInterval(flashInterval[pendingChat]);
 	}
