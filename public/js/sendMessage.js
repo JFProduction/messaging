@@ -1,5 +1,7 @@
 var messageBoard = 'main-chat';
 var username;
+var pendingChat;
+var flashInterval = {};
 
 $(document).ready(function() {
 	$('#sendMessage').click(function() {
@@ -34,11 +36,10 @@ function scrollToBottom() {
 
 function sendMessage() {
 	var message = $('.user-text').val();
-	console.log(messageBoard);
+	
 	if (message != "") {
 		$.ajax({
-			url: '/sendMessage?message=' + message + "&messageboardSender=" + username 
-				+ "&messageboardReceiver=" + messageBoard,
+			url: '/sendMessage?message=' + message + "&messageboard=" + messageBoard,
 			type: "POST"
 		}).done(function(message) {
 			console.log(message);
@@ -56,14 +57,37 @@ function getMessages() {
 		type: "GET"
 	}).done(function(messages) {
 		messages.forEach(function(message) {
-			console.log("inside getMessages MB:" + message.messageboard);
 			var text = "<div class='text-container'><div class='name-grabbed' style='color: " 
 				+ message.usercolor + "'>" + message.username + ":</div><div class='text'>" 
 				+ message.text + "</div></div>";
-				
-			$('#' + message.messageboardReceiver).append(text);
+			
+			if (message.messageboard != "main-chat")
+				$('#' + message.username + "-chat").append(text);
+			else
+				$('#main-chat').append(text);
+			
+			console.log('messageBoard: ' + messageBoard + ' message.messageboard: ' + message.messageboard);
+			
+			if (messageBoard != message.messageboard && message.messageboard != 'main-chat') {
+				var pcName = message.username + '-a';
+				console.log('pcName: ' + pcName);
+				$('#' + pcName ).addClass('flash');
+				pendingChat = pcName;
+				flashInterval[pcName] = setInterval(toggleFlash, 1000);
+			}
+			else {
+				var pcName = message.messageboard.split('-')[0] + '-a';
+				console.log('pcName: ' + pcName);
+				$('#' + pcName ).addClass('flash');
+				pendingChat = pcName;
+				flashInterval[pcName] = setInterval(toggleFlash, 1000);
+			}
 		});
 	});
+}
+
+function toggleFlash() {
+	$('.flash').toggle();
 }
 
 function getUsers() {
@@ -104,15 +128,26 @@ function getPrivateChats() {
 	}).done(function(messageboards) {
 		if (messageboards.length > 0) {
 			messageboards.forEach(function(name) {
-				$('.tabs').append("<div id='" + name + "_pc'><a href='#" + name + "' onclick='changeChat(\"" 
+				$('.tabs').append("<div id='" + name + "_pc'><a id='" + name + "-a' href='#" + name + "' onclick='changeChat(\"" 
 					+ name + "-chat\")'>PC " + name + "</a>" + "<div class='message-board' id='" 
 					+ name + "-chat'></div></div>");
 			});
+			
+			if ($('.user-text').val().length == 0)
+				messageBoard = name + "-chat";
 		}
 	});
 }
 
 function changeChat(chat) {
+	console.log('inside changeChat pendingChat ' + pendingChat);
+	console.log('inside changeChat chat ' + chat);
+	if (pendingChat && (chat.split('-')[0] + '-a' == pendingChat)) {
+		console.log('about to clear the flash interval for ' + pendingChat);
+		$('#' + pendingChat).removeClass('flash');
+		clearInterval(flashInterval[pendingChat]);
+	}
+		
 	messageBoard = chat;
 	console.log(messageBoard);
 }

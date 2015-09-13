@@ -9,13 +9,13 @@ var userCount = 0;
 
 // user object
 function User() {
-    this.username = "";
-    this.uid = 0;
-    this.usercolor = "";
+    this.username;
+    this.uid;
+    this.usercolor;
     this.messages = [];
-    this.messageCount = 0;
+    this.messageCount;
     this.privateMessageBoards = [];
-    this.privMBCount = 0;
+    this.privMBCount;
     this.printuser = function() {
         return "[ username: " + this.username + ", uid: " + this.uid
                 + ", usercolor: " + this.usercolor +  " messageboards: " + this.privateMessageBoards + " ]";
@@ -24,7 +24,7 @@ function User() {
 
 // message object
 function Message() {
-    this.text = "";
+    this.text;
     this.username;
     this.usercolor;
     this.messageboard;

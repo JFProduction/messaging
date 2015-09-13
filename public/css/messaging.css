@@ -119,3 +119,7 @@
     display: block;
     margin-top: 13px;
 }
+
+.flash {
+    background-color: rgb(255, 174, 0);
+}
