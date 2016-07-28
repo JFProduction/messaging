@@ -42,7 +42,7 @@
 }
 
 .send-message {
-    background-color: rgb(255, 174, 0);
+    background: rgb(255, 174, 0);
     border: none;
     color: white;
     padding: 4px;
@@ -66,7 +66,7 @@
 
 .send-message:hover {
     cursor: pointer;
-    background-color: rgb(255, 163, 0);
+    background: rgb(255, 163, 0);
     box-shadow: 1px 1px 1px #888888;
 }
 
@@ -94,7 +94,7 @@
 }
 
 .user-text {
-    background-color: #BBB;
+    background: #BBB;
     color: white;
     border: none;
     padding: 4px;
@@ -121,5 +121,5 @@
 }
 
 .flash {
-    background-color: rgb(255, 174, 0);
+    background: rgb(255, 174, 0);
 }

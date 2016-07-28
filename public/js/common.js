@@ -12,7 +12,6 @@ $(document).ready(function() {
     });
 });
 
-
 function cleanInput(input) {
 	return "<div>" + input + "</div>";
 }

@@ -37,7 +37,7 @@ function scrollToBottom() {
 function sendMessage() {
 	var message = $('.user-text').val();
 	
-	if (message != "") {
+	if (message.trim() != "") {
 		$.ajax({
 			url: '/sendMessage?message=' + message + "&messageboard=" + messageBoard,
 			type: "POST"

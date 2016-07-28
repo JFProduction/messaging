@@ -86,11 +86,15 @@ app.post('/createPrivateChat', function(req, res) {
     var name = req.query.username;
     var u = helper.getUserByName(name, users);
     var u2 = helper.getUser(helper.getIpNum(req.ip), users);
-    var addMB = helper.addMessageBoard(u.privateMessageBoards, name);
-    console.log(addMB);
-    if (addMB) {
-        u.privateMessageBoards[u.privMBCount++] = u2.username;
-        u2.privateMessageBoards[u2.privMBCount++] = name;
+
+    // don't want to start a private chat
+    // with yourself
+    if (u.username !== u2.username) {
+        var addMB = helper.addMessageBoard(u.privateMessageBoards, name);
+        if (addMB) {
+            u.privateMessageBoards[u.privMBCount++] = u2.username;
+            u2.privateMessageBoards[u2.privMBCount++] = name;
+        }
     }
 });
 
@@ -109,6 +113,10 @@ app.get('/getPrivateChats', function(req, res) {
 // gets all the users
 app.get('/getUsers', function(req, res) {
     res.json(users);
+});
+
+app.post('/logout', function(req, res) {
+    console.log("we made it");
 });
 
 app.listen(8080);
