@@ -36,14 +36,16 @@ function scrollToBottom() {
 
 function sendMessage() {
 	var message = $('.user-text').val();
-	
+
 	if (message.trim() != "") {
 		$.ajax({
 			url: '/sendMessage?message=' + message + "&messageboard=" + messageBoard,
 			type: "POST"
 		}).done(function(message) {
-			var text = "<div class='text-container'><div class='name' style='color: " + message.usercolor + "'>"
-				+ message.username + ":</div><div class='text'>" + message.text + "</div></div>";
+			var date = new Date();
+			var msgTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+			var text = "<div class='text-container'><div class='name' style='color: " + message.usercolor + "'>" 
+				+ msgTime + " " + message.username + ":</div><div class='text'>" + message.text + "</div></div>";
 			$('#' + messageBoard).append(text);
 			$('.user-text').val('');
 		});
@@ -56,8 +58,10 @@ function getMessages() {
 		type: "GET"
 	}).done(function(messages) {
 		messages.forEach(function(message) {
+			var date = new Date();
+			var msgTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 			var text = "<div class='text-container'><div class='name-grabbed' style='color: " 
-				+ message.usercolor + "'>" + message.username + ":</div><div class='text'>" 
+				+ message.usercolor + "'>" + msgTime + " " + message.username + ":</div><div class='text'>" 
 				+ message.text + "</div></div>";
 			
 			if (message.messageboard != "main-chat")
