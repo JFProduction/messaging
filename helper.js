@@ -22,7 +22,7 @@ module.exports = {
     //checks to see if the username already exists
     checkIfUserExists: function (name, users) {
         var exists = false;
-        users.forEach(function(user){
+        users.forEach(function(user) {
             if (user.username === name)
                 exists = true;
         });

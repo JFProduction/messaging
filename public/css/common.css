@@ -1,5 +1,6 @@
 * {
     font-family: arial;
+    font-size: 12px;
 }
 
 *:focus {
@@ -11,6 +12,7 @@
     font-size: 23px;
     color: gray;
     padding: 4px;
+    font-weight: 100;
 }
  
 ::-webkit-input-placeholder { /* WebKit browsers */
