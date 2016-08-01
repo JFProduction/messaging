@@ -4,6 +4,8 @@
     float: left;
 }
 
+
+
 .message-container {
     margin-left: 10%;
     padding-top: 10%;
@@ -11,6 +13,14 @@
     height: 100%;
     float: left;
     margin-right: 3%;
+}
+
+.normal {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
 }
 
 .users-container {
@@ -46,11 +56,16 @@
     color: white;
     padding: 4px;
     width: 80px;
-    height: 38px;
+    height: 36px;
+    vertical-align: middle;
 }
 
 .text-message {
     padding: 2px;
+}
+
+.user-input {
+    margin-left: 14px;
 }
 
 .name {
@@ -100,7 +115,8 @@
     border: none;
     padding: 4px;
     width: 74.8%;
-    height: 30px;
+    height: 36px;
+    vertical-align: middle;
 }
 
 .message-board {

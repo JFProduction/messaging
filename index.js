@@ -91,10 +91,8 @@ app.post('/createPrivateChat', function(req, res) {
     // with yourself
     if (u.username !== u2.username) {
         var addMB = helper.addMessageBoard(u.privateMessageBoards, name);
-        if (addMB) {
+        if (addMB)
             u.privateMessageBoards[u.privMBCount++] = u2.username;
-            // u2.privateMessageBoards[u2.privMBCount++] = name;
-        }
         res.json( { "created" : addMB });
     }
 });

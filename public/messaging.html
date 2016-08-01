@@ -16,8 +16,9 @@
             <div class='label'>ver.im</div>
             <div class='container'>
                 <ul id="tabs" class="nav nav-tabs">
-                    <li class='active' onclick='changeChat("main-chat")'><a data-toggle="tab" href="#main">Main Chat</a></li>
-                    <!-- <li><a data-toggle="tab" href="#another">Another Chat</a></li> -->
+                    <li class='active'>
+                        <a id="main-tab" onclick='changeChat("main-chat")' data-toggle="tab" href="#main">Main Chat</a>
+                    </li>
                 </ul>
                 <div class='tab-content'>
                     <div id='main' class='tab-pane fade in active'>
@@ -30,7 +31,7 @@
                     <div class='users-label'>Online:</div>
                 </ul>
             </div>
-            <div>
+            <div class='user-input'>
                 <input class='user-text' type='text' placeholder='Write something...' autofocus></input>
                 <button class='send-message' id='sendMessage'>Send</button>
             </div>
