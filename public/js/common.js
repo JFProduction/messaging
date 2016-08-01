@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
     $('.user-text').on('keyup', function(e) {
         if (e.which == 13) {
             sendMessage();

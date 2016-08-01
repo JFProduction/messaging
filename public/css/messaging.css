@@ -1,10 +1,7 @@
-.mainbody {
-    font-family: arial;
-}
-
 .container {
     margin: 0px auto;
-    height: 400px;
+    width: 80%;
+    float: left;
 }
 
 .message-container {
@@ -17,13 +14,15 @@
 }
 
 .users-container {
-    float: right;
+    /*float: right;*/
     margin-right: 15%;
 }
 
 .users-online {
     color: white;
     font-size: 12px;
+    /*float: right;*/
+    display: inline-block;
 }
 
 .users-label {
@@ -55,9 +54,9 @@
 }
 
 .name {
-    /*color: red;*/
     padding: 2px;
-    float: left;
+    /*float: left;*/
+    display: inline-block;
 }
 
 .user-message {
@@ -72,10 +71,12 @@
 
 .text-container {
     padding-bottom: 3px;
+    margin-left: 5px;
 }
 
 .text {
     padding: 2px;
+    display: inline-block;
 }
 
 .name-grabbed {
@@ -100,15 +101,6 @@
     padding: 4px;
     width: 74.8%;
     height: 30px;
-}
-
-.tabs {
-    padding: 10px;
-    width: 80%;
-    height: 100%;
-    margin-bottom: 3px;
-    float: left;
-    margin-right: 13px;
 }
 
 .message-board {

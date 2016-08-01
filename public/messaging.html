@@ -5,21 +5,24 @@
         <meta http-equiv="Cache-control" content="no-cache"/>
         <meta http-equiv="Cache-control" content="no-store, must-revalidate, private, max-age=0"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/messaging.css"/>
         <link rel="stylesheet" type="text/css" href="css/common.css"/>
         <link rel="stylesheet" type="text/css" href="css/tab.css"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="js/common.js"></script>
-        <script src="js/sendMessage.js"></script>
         <title id='pageTitle'>ver.im</title>
     </head>
-    <div class="mainbody">
-        <div class='label'>ver.im</div>
-        <div class='container'>
-            <div class='tabs'>
-                <div id='main'>
-                    <a href='#main' id='main-a' class='flash' onclick='changeChat("main-chat")'>Main Chat</a>
-                    <div class='message-board' id='main-chat'></div>
+    <body>
+        <div class="mainbody">
+            <div class='label'>ver.im</div>
+            <div class='container'>
+                <ul id="tabs" class="nav nav-tabs">
+                    <li class='active' onclick='changeChat("main-chat")'><a data-toggle="tab" href="#main">Main Chat</a></li>
+                    <!-- <li><a data-toggle="tab" href="#another">Another Chat</a></li> -->
+                </ul>
+                <div class='tab-content'>
+                    <div id='main' class='tab-pane fade in active'>
+                        <div class='message-board' id='main-chat'></div>
+                    </div>
                 </div>
             </div>
             <div class='users-online'>
@@ -27,11 +30,15 @@
                     <div class='users-label'>Online:</div>
                 </ul>
             </div>
-            <div class='user-message'>
+            <div>
                 <input class='user-text' type='text' placeholder='Write something...' autofocus></input>
                 <button class='send-message' id='sendMessage'>Send</button>
             </div>
         </div>
-    </div>
-    <div class='footer'></div>
+        <div class='footer'></div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="js/common.js"></script>
+        <script src="js/sendMessage.js"></script>
+    </body>
 </html>
