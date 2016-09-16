@@ -1,0 +1,18 @@
+.nav-tabs>li>a {
+  border-radius: 0;
+  padding: 3px 7px;
+}
+
+.nav-tabs {
+  width: 103%;
+}
+
+.tab-content {
+    min-height: 500px;
+    min-width: 103%;
+    display: inline-block;
+    margin-bottom: 10px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}

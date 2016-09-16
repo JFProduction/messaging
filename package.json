@@ -1,0 +1,24 @@
+{
+  "name": "messaging",
+  "version": "0.0.1",
+  "description": "This is a simple NodeJS messaging app.",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JFProduction/messaging.git"
+  },
+  "author": "jimmyfargo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JFProduction/messaging/issues"
+  },
+  "homepage": "https://github.com/JFProduction/messaging#readme"
+}

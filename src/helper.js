@@ -21,32 +21,29 @@ module.exports = {
 
     //checks to see if the username already exists
     checkIfUserExists: function (name, users) {
-        var exists = false;
-        users.forEach(function(user){
-            if (user.username === name)
-                exists = true;
-        });
-        return exists;
+        return users.reduce(function(all, item, index) {
+            if (item.username === name)
+                all = true;
+            return all;
+        }, false);
     },
 
     // gets the user based on the uid
     getUser: function (ip, users) {
-        var u;
-        users.forEach(function(user) {
-            if (user.uid === ip)
-                u = user;
-        });
-        return u;
+        return users.reduce(function(all, item, index) {
+            if (item.uid === ip)
+                all = item;
+            return all;
+        }, {});
     },
 
     // gets the user based on the name
     getUserByName: function (name, users) {
-        var u;
-        users.forEach(function(user) {
-            if (user.username === name)
-                u = user;
-        });
-        return u;
+        return users.reduce(function(all, item, index) {
+            if (item.username === name)
+                all = item;
+            return all;
+        }, {});
     },
 
     // helper function to give the other user's
