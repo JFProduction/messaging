@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-This is the start of a pure Node.JS messaging application.
-
-TODO: might update and use socket.io for the messaging. YOLO
-=======
 #messaging
 
 A simple Node.js messaging application
@@ -30,4 +25,3 @@ After running the command above you will see:
 > Application has started at: localhost:8080
 
 Now use your favorite browser and go to ***localhost:8080***, sign in and start hosting your own chatroom
->>>>>>> development
