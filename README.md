@@ -19,8 +19,9 @@ Once that is done, run
 
 After running the command above you will see: 
 > messaging@0.0.1 start /your/path/to/messaging/
+
 > node index
 
->Application has started at: localhost:8080
+> Application has started at: localhost:8080
 
 Now use your favorite browser and go to ***localhost:8080***, sign in and start hosting your own chatroom
