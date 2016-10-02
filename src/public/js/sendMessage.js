@@ -42,10 +42,8 @@ function sendMessage() {
 			url: '/sendMessage?message=' + message + "&messageboard=" + messageBoard,
 			type: "POST"
 		}).done(function(message) {
-			var date = new Date();
-			var msgTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 			var text = "<div class='text-container'><div class='name' style='color: " + message.usercolor + "'><span style='font-size: 9px;'>" 
-				+ msgTime + "</span> " + message.username + ":</div><div class='text'>" + message.text + "</div></div>";
+				+ getMsgTime() + "</span> " + message.username + ":</div><div class='text'>" + message.text + "</div></div>";
 			$('#' + messageBoard).append(text);
 			$('.user-text').val('');
 		});
@@ -58,12 +56,8 @@ function getMessages() {
 		type: "GET"
 	}).done(function(messages) {
 		messages.forEach(function(message) {
-			console.log("message.messageboard: " + message.messageboard);
-			console.log("messageBoard: " + messageBoard);
-			var date = new Date();
-			var msgTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 			var text = "<div class='text-container'><div class='name-grabbed' style='color: " 
-				+ message.usercolor + "'><span style='font-size: 9px;'>" + msgTime + "</span> " + message.username + ":</div><div class='text'>" 
+				+ message.usercolor + "'><span style='font-size: 9px;'>" + getMsgTime() + "</span> " + message.username + ":</div><div class='text'>" 
 				+ message.text + "</div></div>";
 			
 			if (message.messageboard !== "main-chat")

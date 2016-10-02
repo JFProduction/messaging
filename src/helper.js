@@ -21,7 +21,7 @@ module.exports = {
 
     //checks to see if the username already exists
     checkIfUserExists: function (name, users) {
-        return users.reduce(function(all, item, index) {
+        return users.reduce(function(all, item) {
             if (item.username === name)
                 all = true;
             return all;
@@ -30,7 +30,7 @@ module.exports = {
 
     // gets the user based on the uid
     getUser: function (ip, users) {
-        return users.reduce(function(all, item, index) {
+        return users.reduce(function(all, item) {
             if (item.uid === ip)
                 all = item;
             return all;
@@ -39,7 +39,7 @@ module.exports = {
 
     // gets the user based on the name
     getUserByName: function (name, users) {
-        return users.reduce(function(all, item, index) {
+        return users.reduce(function(all, item) {
             if (item.username === name)
                 all = item;
             return all;

@@ -3,6 +3,8 @@ var express = require('express'),
     path = require('path'),
     helper = require('./helper');
 
+app.use(express.static(path.join(__dirname,'public')));
+
 // global variabels
 var users = [];
 var userCount = 0;
@@ -18,7 +20,8 @@ function User() {
     this.privMBCount;
     this.printuser = function() {
         return "[ username: " + this.username + ", uid: " + this.uid
-                + ", usercolor: " + this.usercolor +  " messageboards: " + this.privateMessageBoards + " ]";
+                + ", usercolor: " + this.usercolor +  
+                " messageboards: " + this.privateMessageBoards + " ]";
     };
 }
 
@@ -33,17 +36,13 @@ function Message() {
     };
 }
 
-app.use(express.static(path.join(__dirname,'public')));
-
 // sends the message, also gives others users
 // the message
 app.post('/sendMessage', function(req, res) {
     var text = req.query.message;
     var messageboard = req.query.messageboard;
     var u = helper.getUser(helper.getIpNum(req.ip), users);
-    
-    // TODO: need to figure out the private message issue....
-    
+       
     if (u.username != "") {
         var m = new Message();
         m.text = text;
@@ -86,7 +85,7 @@ app.post('/createPrivateChat', function(req, res) {
     var name = req.query.username;
     var u = helper.getUserByName(name, users);
     var u2 = helper.getUser(helper.getIpNum(req.ip), users);
-    console.log(u.username + " " + u2.username);
+
     // don't want to start a private chat
     // with yourself
     if (u.username !== u2.username) {
