@@ -1,12 +1,12 @@
 // palette of colors for usernames
 var colors = [
-    '#FF0000', // red
-    '#0900FF', // blue
-    '#FF9700', // orange
-    '#04A910', // green
-    '#000000', // yellow
-    '#FF00EA', // pink
-    '#A77878'  // idk
+    '#ff5252', // red
+    '#26547C', // blue
+    '#FFD166', // orange
+    '#06D6A0', // green
+    '#2E294E', // dark-blue
+    '#5B5F97', // pink
+    '#50514F'  // dark
 ]
 
 var colorNum = 0;
