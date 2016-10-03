@@ -51,7 +51,7 @@ module.exports = {
     passMessageToOtherUsers: function (message, users) {
         users.forEach(function(u) {
             if (u.username != message.username)
-                u.messages[u.messageCount++] = message;
+                u.messages.push(message);
         });
     },
 

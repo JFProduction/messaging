@@ -20,7 +20,7 @@ function User() {
     this.privMBCount;
     this.printuser = function() {
         return "[ username: " + this.username + ", uid: " + this.uid
-                + ", usercolor: " + this.usercolor +  
+                + ", usercolor: " + this.usercolor +
                 " messageboards: " + this.privateMessageBoards + " ]";
     };
 }
@@ -42,7 +42,7 @@ app.post('/sendMessage', function(req, res) {
     var text = req.query.message;
     var messageboard = req.query.messageboard;
     var u = helper.getUser(helper.getIpNum(req.ip), users);
-       
+
     if (u.username != "") {
         var m = new Message();
         m.text = text;
@@ -74,7 +74,7 @@ app.post('/createUser', function(req, res) {
         u.username = name;
         u.uid = helper.getIpNum(req.ip);
         u.usercolor = helper.setUserColor(users);
-        users[userCount++] = u;
+        users.push(u);
         res.json( { "advance": '/messaging.html' } );
     }
     else
