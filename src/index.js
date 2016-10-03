@@ -7,7 +7,6 @@ app.use(express.static(path.join(__dirname,'public')));
 
 // global variabels
 var users = [];
-var userCount = 0;
 
 // user object
 function User() {
@@ -15,9 +14,7 @@ function User() {
     this.uid;
     this.usercolor;
     this.messages = [];
-    this.messageCount;
     this.privateMessageBoards = [];
-    this.privMBCount;
     this.printuser = function() {
         return "[ username: " + this.username + ", uid: " + this.uid
                 + ", usercolor: " + this.usercolor +
@@ -62,7 +59,6 @@ app.get('/getMessages', function(req, res) {
     var u = helper.getUser(helper.getIpNum(req.ip), users);
     res.json(u.messages);
     u.messages = [];
-    u.messageCount = 0;
 });
 
 // creates the user and passes the frontend
@@ -91,7 +87,7 @@ app.post('/createPrivateChat', function(req, res) {
     if (u.username !== u2.username) {
         var addMB = helper.addMessageBoard(u.privateMessageBoards, name);
         if (addMB)
-            u.privateMessageBoards[u.privMBCount++] = u2.username;
+            u.privateMessageBoards.push(u2.username);
         res.json( { "created" : addMB });
     }
 });
