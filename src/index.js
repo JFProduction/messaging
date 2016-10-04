@@ -1,9 +1,11 @@
 var express = require('express'),
     app = express(),
     path = require('path'),
+    bodyparser = require('body-parser'),
     helper = require('./helper');
 
 app.use(express.static(path.join(__dirname,'public')));
+app.use(bodyparser.json()); // adding bodyparser to project
 
 // global variabels
 var users = [];
@@ -36,8 +38,10 @@ function Message() {
 // sends the message, also gives others users
 // the message
 app.post('/sendMessage', function(req, res) {
-    var text = req.query.message;
-    var messageboard = req.query.messageboard;
+    // var text = req.query.message;
+    // var messageboard = req.query.messageboard;
+    var text = req.body.message;
+    var messageboard = req.body.messageboard;
     var u = helper.getUser(helper.getIpNum(req.ip), users);
 
     if (u.username != "") {

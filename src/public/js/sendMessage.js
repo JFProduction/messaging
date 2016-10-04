@@ -7,9 +7,9 @@ $(document).ready(function() {
 	$('#sendMessage').click(function() {
 		sendMessage();
 	});
-	
+
 	showLoggedInto();
-	
+
 	getMessages();
 	getUsers();
 	setInterval(scrollToBottom, 200);
@@ -30,7 +30,7 @@ function showLoggedInto() {
 
 function scrollToBottom() {
 	$(".message-board").animate({
-		scrollTop: $('#' + messageBoard).height()	
+		scrollTop: $('#' + messageBoard).height()
 	}, 1000);
 }
 
@@ -39,10 +39,15 @@ function sendMessage() {
 
 	if (message.trim() != "") {
 		$.ajax({
-			url: '/sendMessage?message=' + message + "&messageboard=" + messageBoard,
-			type: "POST"
+			url: '/sendMessage',
+			data: JSON.stringify({
+				'message': message,
+				'messageboard': messageBoard
+			}),
+			contentType: 'application/json',
+			type: 'POST'
 		}).done(function(message) {
-			var text = "<div class='text-container'><div class='name' style='color: " + message.usercolor + "'><span style='font-size: 9px;'>" 
+			var text = "<div class='text-container'><div class='name' style='color: " + message.usercolor + "'><span style='font-size: 9px;'>"
 				+ getMsgTime() + "</span> " + message.username + ":</div><div class='text'>" + message.text + "</div></div>";
 			$('#' + messageBoard).append(text);
 			$('.user-text').val('');
@@ -56,15 +61,15 @@ function getMessages() {
 		type: "GET"
 	}).done(function(messages) {
 		messages.forEach(function(message) {
-			var text = "<div class='text-container'><div class='name-grabbed' style='color: " 
-				+ message.usercolor + "'><span style='font-size: 9px;'>" + getMsgTime() + "</span> " + message.username + ":</div><div class='text'>" 
+			var text = "<div class='text-container'><div class='name-grabbed' style='color: "
+				+ message.usercolor + "'><span style='font-size: 9px;'>" + getMsgTime() + "</span> " + message.username + ":</div><div class='text'>"
 				+ message.text + "</div></div>";
-			
+
 			if (message.messageboard !== "main-chat")
 				$('#' + message.username + "-chat").append(text);
 			else
 				$('#main-chat').append(text);
-			
+
 			if (messageBoard != message.messageboard && message.messageboard != 'main-chat') {
 				var pcName = message.username + '-tab';
 				console.log('pcName: ' + pcName);
@@ -74,7 +79,7 @@ function getMessages() {
 			}
 			else if (messageBoard != message.messageboard) {
 				var pcName = message.messageboard.split('-')[0] + '-tab';
-				
+
 				$('#' + pcName ).addClass('flash');
 				pendingChat = pcName;
 				flashInterval[pcName] = setInterval(toggleFlash, 1000);
@@ -94,8 +99,8 @@ function getUsers() {
 	}).done(function(users) {
 		$('#users').html("<div class='users-label'>Online:</div>");
 		users.forEach(function(user) {
-			$('#users').append("<li class='user'><a onclick='createPrivateChat(\"" + user.username + 
-				"\")' class='a-user' style='color: " + user.usercolor + "' title='Chat privately with: " 
+			$('#users').append("<li class='user'><a onclick='createPrivateChat(\"" + user.username +
+				"\")' class='a-user' style='color: " + user.usercolor + "' title='Chat privately with: "
 				+ user.username + "'>" + user.username + "</a></li>");
 		});
 	});
@@ -108,9 +113,9 @@ function createPrivateChat(name) {
 	}).done(function(resp) {
 		if (resp.created === true) {
 			$('#tabs').append("<li><a id='" + name + "-tab' href='#" + name + "' data-toggle='tab' onclick=\"changeChat('" + name + "-chat')\">" + name + "</a></li>");
-			$('.tab-content').append("<div id='" + name + "' class='tab-pane fade'>" 
-					+ "<div class='message-board' id='" + name + "-chat'>" 
-					+ "</div>" 
+			$('.tab-content').append("<div id='" + name + "' class='tab-pane fade'>"
+					+ "<div class='message-board' id='" + name + "-chat'>"
+					+ "</div>"
 				+ "</div>");
 			changeChat(name);
 		}
@@ -128,12 +133,12 @@ function getPrivateChats() {
 		if (messageboards.length > 0) {
 			messageboards.forEach(function(name) {
 				$('#tabs').append("<li><a href='#" + name + "' data-toggle='tab' onclick=\"changeChat('" + name + "-chat')\">" + name + "</a></li>");
-				$('.tab-content').append("<div id='" + name + "' class='tab-pane fade'>" 
-						+ "<div class='message-board' id='" + name + "-chat'>" 
-						+ "</div>" 
+				$('.tab-content').append("<div id='" + name + "' class='tab-pane fade'>"
+						+ "<div class='message-board' id='" + name + "-chat'>"
+						+ "</div>"
 					+ "</div>");
 			});
-			
+
 			if ($('.user-text').val().length == 0)
 				messageBoard = name + "-chat";
 		}
