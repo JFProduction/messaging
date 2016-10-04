@@ -19,31 +19,30 @@ module.exports = {
             colorNum = 0;
     },
 
-    //checks to see if the username already exists
+    // checks to see if the username already exists
     checkIfUserExists: function (name, users) {
-        return users.reduce(function(all, item) {
+        return users.reduce(function(exists, item, index) {
             if (item.username === name)
-                all = true;
-            return all;
+                return true;
+            return exists;
         }, false);
     },
 
     // gets the user based on the uid
     getUser: function (ip, users) {
-        return users.reduce(function(all, item) {
-            if (item.uid === ip)
-                all = item;
-            return all;
-        }, {});
+        var user = users.filter(function(user) {
+            return user.uid === ip;
+        });
+        return user;
     },
 
     // gets the user based on the name
     getUserByName: function (name, users) {
-        return users.reduce(function(all, item) {
-            if (item.username === name)
-                all = item;
-            return all;
-        }, {});
+        var user =  users.filter(function(user) {
+            return user.username === name;
+        });
+        console.log('getUserByName', user);
+        return user;
     },
 
     // helper function to give the other user's
@@ -58,12 +57,13 @@ module.exports = {
     // cleans up the ip for the users' uid
     getIpNum: function (ip) {
         ip = ip.split(":").join('');
-        var tmp = ip.replace(/[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]/g, '').split(".").join('');
+        var tmp = ip.replace(/[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]/g, '')
+            .split(".").join('');
         return tmp;
     },
 
     // checks to see if we can add a new
-    // messageboard for the user so only one
+    // messageboard for the user, so only one
     // messageboard per username combo
     addMessageBoard: function(mbs, mb) {
         console.log(mb);
