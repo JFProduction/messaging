@@ -28,18 +28,22 @@ module.exports = {
 
     // gets the user based on the uid
     getUser: function (ip, users) {
-        var user = users.filter(function(user) {
-            return user.uid === ip;
-        });
-        return user[0];
+        var user = users.reduce(function(ret, usr, i) {
+            if (usr.uid === ip)
+                ret = usr;
+            return ret;
+        }, {});
+        return user;
     },
 
     // gets the user based on the name
     getUserByName: function (name, users) {
-        var user = users.filter(function(user) {
-            return user.username === name;
+        var user = users.reduce(function(ret, usr, i) {
+            if (usr.username === name)
+                ret = usr;
+            return ret;
         });
-        return user[0];
+        return user;
     },
 
     // helper function to give the other user's
@@ -76,6 +80,8 @@ module.exports = {
         return add;
     },
 
+    // auxiliary function to turn a json
+    // obj to a string
     jsonToStr: function(j) {
         return JSON.stringify(j, null, 3);
     }
