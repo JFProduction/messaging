@@ -66,7 +66,6 @@ module.exports = {
     // messageboard for the user so only one
     // messageboard per username combo
     addMessageBoard: function(mbs, mb) {
-        console.log(mb);
         var add = true;
         if (mbs.length > 0) {
             mbs.forEach(function(m) {
@@ -77,5 +76,9 @@ module.exports = {
             });
         }
         return add;
+    },
+
+    jsonToStr: function(j) {
+        return JSON.stringify(j, null, 3);
     }
 };
