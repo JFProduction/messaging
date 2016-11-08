@@ -31,16 +31,15 @@ module.exports = {
         var user = users.filter(function(user) {
             return user.uid === ip;
         });
-        return user;
+        return user[0];
     },
 
     // gets the user based on the name
     getUserByName: function (name, users) {
-        var user =  users.filter(function(user) {
+        var user = users.filter(function(user) {
             return user.username === name;
         });
-        console.log('getUserByName', user);
-        return user;
+        return user[0];
     },
 
     // helper function to give the other user's
@@ -75,5 +74,9 @@ module.exports = {
             });
         }
         return add;
+    },
+
+    jsonToStr: function(j) {
+        return JSON.stringify(j, null, 3);
     }
 };

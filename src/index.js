@@ -57,7 +57,8 @@ app.post('/sendMessage', function(req, res) {
     var text = req.body.message;
     var messageboard = req.body.messageboard;
     var u = helper.getUser(helper.getIpNum(req.ip), users);
-
+    console.log(helper.jsonToStr(u));
+    console.log(u.username);
     if (u.username != "") {
         var m = new Message();
         m.text = text;
