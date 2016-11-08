@@ -5,7 +5,7 @@ var express = require('express'),
     helper = require('./helper');
 
 app.use(express.static(path.join(__dirname,'public')));
-app.use(bodyparser.json()); // adding bodyparser to project
+app.use(bodyparser.json());
 
 // global variabels
 var users = [];
@@ -35,36 +35,6 @@ function Message() {
     };
 }
 
-// sends the message, also gives others users
-// the message
-app.post('/sendMessage', function(req, res) {
-    // var text = req.query.message;
-    // var messageboard = req.query.messageboard;
-    var text = req.body.message;
-    var messageboard = req.body.messageboard;
-    var u = helper.getUser(helper.getIpNum(req.ip), users);
-
-    if (u.username != "") {
-        var m = new Message();
-        m.text = text;
-        m.username = u.username;
-        m.usercolor = u.usercolor;
-        m.messageboard = messageboard;
-        helper.passMessageToOtherUsers(m, users);
-
-        // so the message appears on
-        // the user's screen
-        res.json( m.getmessage() );
-    }
-});
-
-// gets the user's messages and posts them
-app.get('/getMessages', function(req, res) {
-    var u = helper.getUser(helper.getIpNum(req.ip), users);
-    res.json(u.messages);
-    u.messages = [];
-});
-
 // creates the user and passes the frontend
 // if the username is unique
 app.post('/createUser', function(req, res) {
@@ -79,6 +49,33 @@ app.post('/createUser', function(req, res) {
     }
     else
         res.json( { "advance": 'false' } );
+});
+
+// sends the message, also gives other users
+// the message
+app.post('/sendMessage', function(req, res) {
+    var text = req.body.message;
+    var messageboard = req.body.messageboard;
+    var u = helper.getUser(helper.getIpNum(req.ip), users);
+    console.log(helper.jsonToStr(u));
+    console.log(u.username);
+    if (u.username != "") {
+        var m = new Message();
+        m.text = text;
+        m.username = u.username;
+        m.usercolor = u.usercolor;
+        m.messageboard = messageboard;
+        helper.passMessageToOtherUsers(m, users);
+
+        res.json( m.getmessage() );
+    }
+});
+
+// gets the user's messages and posts them
+app.get('/getMessages', function(req, res) {
+    var u = helper.getUser(helper.getIpNum(req.ip), users);
+    res.json(u.messages);
+    u.messages = [];
 });
 
 app.post('/createPrivateChat', function(req, res) {
@@ -117,5 +114,5 @@ app.post('/logout', function(req, res) {
     console.log("we made it");
 });
 
-app.listen(8080);
-console.log("Application has started at: localhost:8080");
+app.listen(3000);
+console.log("Application has started at: localhost:3000");
