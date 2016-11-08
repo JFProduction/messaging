@@ -1,22 +1,20 @@
-// palette of colors for usernames
-var colors = [
-    '#ff5252', // red
-    '#26547C', // blue
-    '#FFD166', // orange
-    '#06D6A0', // green
-    '#2E294E', // dark-blue
-    '#5B5F97', // pink
-    '#50514F'  // dark
-]
-
-var colorNum = 0;
-
 module.exports = {
+    colors: [
+        '#ff5252', // red
+        '#26547C', // blue
+        '#FFD166', // orange
+        '#06D6A0', // green
+        '#2E294E', // dark-blue
+        '#5B5F97', // pink
+        '#50514F'  // dark
+    ],
+    colorNum: 0,
+
     setUserColor: function(users) {
-        if (colorNum <= 5)
-            return colors[colorNum++];
+        if (this.colorNum <= 5)
+            return this.colors[this.colorNum++];
         else
-            colorNum = 0;
+            this.colorNum = 0;
     },
 
     // checks to see if the username already exists
